@@ -14,16 +14,22 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
                 return false;
             }
         }
-        $('a:not([data-toggle])').on('click', function (e) {
+        this.loadPage = function(e) {
             var regExp = new RegExp("//" + location.host + "($|/)"),
-                href = $(this).attr('href');
+                href = $(this).attr('href') || $(this).attr('action');
+            if(!href) {
+                return;
+            }
             if ((href.substring(0, 4) === "http") ? regExp.test(href) : true) {
                 e.preventDefault();
                 if (config.loadingElement) {
                     $(config.selector).hide();
                     $(config.loadingElement).show();
                 }
-                $.ajax(href).done(function (response) {
+                $.ajax(href,{
+                    type: $(this).attr('method') || 'get',
+                    data: $(this).serialize()
+                }).done(function (response) {
                     var newEls = $(response);
                     var content = newEls.filter(config.selector);
                     $(config.selector).replaceWith(content);
@@ -33,10 +39,11 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
                     if (config.loadingElement) {
                         $(config.loadingElement).hide();
                     }
+                    $('body').scrollTop(0);
                     $.singlePageApp(config);
                 });
             }
-        });
+        };
         this.refreshScripts = function (els) {
             var oldScripts = $.map($('script'), function (script, index) {
                 return $(script).attr("src");
@@ -53,6 +60,10 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
         } else {
             $('head').append('<meta name="apple-mobile-web-app-capable" content="yes">');
         }
+
+        $('a:not([data-toggle])').on('click',this.loadPage);
+        $('form').on('submit',this.loadPage);
+
         var spa = this;
     };
 }(jQuery));
