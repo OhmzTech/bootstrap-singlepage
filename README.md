@@ -24,7 +24,7 @@ Simply include the plugin file, update the selectors in the example code below, 
 ### Configuration Options
 **selector**: the jQuery selector for the main content element that will be swapped out on page change.  
 **refreshScripts**: whether or not to check if any scripts should also be copied and added from the new page. Defaults to true. You really only want to set this to false if you are positive all your pages have the same scripts.   
-**loadingElement**: jQuery selector for the element that will be shown/hidden between page loads.
+**loadingElement**: jQuery selector for the element that will be shown/hidden between page loads.  
 **userAgents**: array of user agent string fragments that will be tested against. If the user agent does not match one of these strings the single page app functionality will be disabled. *If you do not include this option single page app will be enabled on ALL user agents, including desktop browsers!*
 
 ### Things To Remember
