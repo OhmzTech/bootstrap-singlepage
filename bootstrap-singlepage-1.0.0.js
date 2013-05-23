@@ -21,7 +21,7 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
         this.loadPage = function(e) {
             var regExp = new RegExp("//" + location.host + "($|/)"),
                 href = $(this).attr('href') || $(this).attr('action');
-            if(!href) {
+            if(!href || href.indexOf('#') > -1) {
                 return;
             }
             if ((href.substring(0, 4) === "http") ? regExp.test(href) : true) {
