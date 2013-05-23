@@ -35,7 +35,7 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
                     data: $(this).serialize()
                 }).done(function (response) {
                     var newEls = $(response);
-                    var content = newEls.filter(config.selector);
+                    var content = $.merge(newEls.filter(config.selector),newEls.find(config.selector));
                     $(config.selector).replaceWith(content);
                     if (config.refreshScripts) {
                         spa.refreshScripts(newEls);
@@ -52,7 +52,7 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
             var oldScripts = $.map($('script'), function (script, index) {
                 return $(script).attr("src");
             });
-            var newScripts = els.filter('script');
+            var newScripts = $.merge(els.filter('script'),els.find('script'));
             newScripts.each(function (index, script) {
                 if ($.inArray($(script).attr("src"), oldScripts) === -1) {
                     $('head').append(script);
