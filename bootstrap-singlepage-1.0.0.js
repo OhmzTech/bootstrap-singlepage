@@ -8,6 +8,10 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
 
 (function ($) {
     $.singlePageApp = function (config) {
+        config = $.extend({},{
+            refreshScripts: true,
+            showLoading: false
+        },config);
         if (config.userAgents) {
             var uaReg = new RegExp('//' + config.userAgents.join('|') + '//', 'i');
             if (!uaReg.test(navigator.userAgent)) {
@@ -60,10 +64,8 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
         } else {
             $('head').append('<meta name="apple-mobile-web-app-capable" content="yes">');
         }
-
         $('a:not([data-toggle])').on('click',this.loadPage);
         $('form').on('submit',this.loadPage);
-
         var spa = this;
     };
 }(jQuery));
