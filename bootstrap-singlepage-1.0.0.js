@@ -44,7 +44,7 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
                         $(config.loadingElement).hide();
                     }
                     $('body').scrollTop(0);
-                    $.singlePageApp(config);
+                    spa.setLinks();
                 });
             }
         };
@@ -56,16 +56,21 @@ Documentation: https://github.com/OhmzTech/bootstrap-singlepage
             newScripts.each(function (index, script) {
                 if ($.inArray($(script).attr("src"), oldScripts) === -1) {
                     $('head').append(script);
+                } else if(!$(script).attr("src")) {
+                    // TO-DO: copy over inline scripts here as needed
                 }
             });
         };
+        this.setLinks = $.proxy(function() {
+            $('a:not([data-toggle])').on('click',this.loadPage);
+            $('form').on('submit',this.loadPage);
+        },this);
         if ($('body').has($('meta[name="apple-mobile-web-app-capable"]'))) {
             $('meta[name="apple-mobile-web-app-capable"]').attr('content', 'yes');
         } else {
             $('head').append('<meta name="apple-mobile-web-app-capable" content="yes">');
         }
-        $('a:not([data-toggle])').on('click',this.loadPage);
-        $('form').on('submit',this.loadPage);
+        this.setLinks();
         var spa = this;
     };
 }(jQuery));
